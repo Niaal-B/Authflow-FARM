@@ -7,7 +7,7 @@ auth_router = APIRouter()
 
 @auth_router.post("/register",response_model=UserResponse)
 async def register_user(user: UserCreate):
-    existing_user = await db.users.find_one({"email": user.email})
+    existing_user = await db.user.find_one({"email": user.email})
     if existing_user:
         raise HTTPException(status_code=400,detail="Email Already Registered")
 
