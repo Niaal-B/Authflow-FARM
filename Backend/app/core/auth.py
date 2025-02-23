@@ -17,3 +17,11 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         raise HTTPException(status_code=401,detail="User not found")
     
     return user
+
+
+async def get_current_admin(user=Depends(get_current_user)):
+    if user["role"] != "admin":
+        raise HTTPException(status_code=403,detail="Access denied: Admins only")
+    
+    return user
+

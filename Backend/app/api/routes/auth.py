@@ -12,7 +12,7 @@ async def register_user(user: UserCreate):
         raise HTTPException(status_code=400,detail="Email Already Registered")
 
     hashed_password = hash_password(user.password)
-    user_data = {"name":user.name,"email":user.email,"password": hashed_password}
+    user_data = {"name":user.name,"email":user.email,"password": hashed_password,"role": "user"}
     result = await db.user.insert_one(user_data)
     return UserResponse(id=str(result.inserted_id), email=user.email,name=user.name)
 
